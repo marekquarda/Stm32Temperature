@@ -6,8 +6,8 @@
 **
 **  Author		: STM32CubeMX
 **
-**  Abstract    : Linker script for STM32L152RETx series
-**                512Kbytes FLASH and 80Kbytes RAM
+**  Abstract    : Linker script for STM32L152RCTx series
+**                256Kbytes FLASH and 32Kbytes RAM
 **
 **                Set heap size, stack size and stack location according
 **                to application requirements.
@@ -55,8 +55,8 @@ ENTRY(Reset_Handler)
 /* Specify the memory areas */
 MEMORY
 {
-RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 80K
-FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 512K
+RAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 32K
+FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 256K
 }
 
 /* Highest address of the user mode stack */
