@@ -106,16 +106,20 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    /* USER CODE END WHILE */
     if(1==btn1) {
-      HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
+      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, SET);
+      HAL_Delay(500);
+      HAL_GPIO_WritePin(LED_1_GPIO_Port, LED_1_Pin, RESET);
+      //HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
       btn1 = 0;
     }
     if(1==btn2) {
-      HAL_GPIO_TogglePin(LED_2_GPIO_Port, LED_2_Pin);
+      HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, SET);
+      HAL_Delay(500);
+      HAL_GPIO_WritePin(LED_2_GPIO_Port, LED_2_Pin, RESET);
+      //HAL_GPIO_TogglePin(LED_2_GPIO_Port, LED_2_Pin);
       btn2 = 0;
     }
-    /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
@@ -314,7 +318,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : BTN_GREEN_Pin BTN_RED_Pin */
   GPIO_InitStruct.Pin = BTN_GREEN_Pin|BTN_RED_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
@@ -325,17 +329,24 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(LED_2_GPIO_Port, &GPIO_InitStruct);
 
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI0_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+
+  HAL_NVIC_SetPriority(EXTI1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+
   /* USER CODE BEGIN MX_GPIO_Init_2 */
   
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_PIN) {
-  if (GPIO_PIN == BTN_GREEN_Pin) {
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
+  if (GPIO_Pin == BTN_GREEN_Pin) {
     btn1 = 1;
   }
-  if (GPIO_PIN == BTN_RED_Pin) {
+  if (GPIO_Pin == BTN_RED_Pin) {
     btn2 = 1;
   }
 }

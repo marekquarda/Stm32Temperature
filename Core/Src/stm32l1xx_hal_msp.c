@@ -73,6 +73,11 @@ void HAL_MspInit(void)
 
   /* System interrupt init*/
 
+  /* Peripheral interrupt init */
+  /* RCC_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(RCC_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(RCC_IRQn);
+
   /* USER CODE BEGIN MspInit 1 */
 
   /* USER CODE END MspInit 1 */
@@ -140,6 +145,9 @@ void HAL_LCD_MspInit(LCD_HandleTypeDef* hlcd)
     GPIO_InitStruct.Alternate = GPIO_AF11_LCD;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+    /* LCD interrupt Init */
+    HAL_NVIC_SetPriority(LCD_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(LCD_IRQn);
     /* USER CODE BEGIN LCD_MspInit 1 */
 
     /* USER CODE END LCD_MspInit 1 */
@@ -191,6 +199,8 @@ void HAL_LCD_MspDeInit(LCD_HandleTypeDef* hlcd)
     HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14
                           |GPIO_PIN_15|GPIO_PIN_4|GPIO_PIN_9);
 
+    /* LCD interrupt DeInit */
+    HAL_NVIC_DisableIRQ(LCD_IRQn);
     /* USER CODE BEGIN LCD_MspDeInit 1 */
 
     /* USER CODE END LCD_MspDeInit 1 */
@@ -228,6 +238,9 @@ void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
     GPIO_InitStruct.Alternate = GPIO_AF5_SPI1;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
+    /* SPI1 interrupt Init */
+    HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
+    HAL_NVIC_EnableIRQ(SPI1_IRQn);
     /* USER CODE BEGIN SPI1_MspInit 1 */
 
     /* USER CODE END SPI1_MspInit 1 */
@@ -259,6 +272,8 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7);
 
+    /* SPI1 interrupt DeInit */
+    HAL_NVIC_DisableIRQ(SPI1_IRQn);
     /* USER CODE BEGIN SPI1_MspDeInit 1 */
 
     /* USER CODE END SPI1_MspDeInit 1 */
