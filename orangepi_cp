@@ -1,4 +1,2 @@
 scp build/Release/test.elf orangepi@192.168.63.188:
-ssh orangepi@192.168.63.188
-#sudo openocd -f board/temperature.cfg -c "program test.elf reset exit"
-
+ssh -t orangepi@192.168.63.188 'sudo openocd -f board/temperature.cfg -c "program test.elf reset exit"; bash -l'

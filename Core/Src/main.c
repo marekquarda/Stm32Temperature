@@ -47,7 +47,8 @@ SPI_HandleTypeDef hspi1;
 PCD_HandleTypeDef hpcd_USB_FS;
 
 /* USER CODE BEGIN PV */
-
+uint8_t btn1=0;
+uint8_t btn2=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -106,10 +107,14 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
-    HAL_Delay(300);
-    HAL_GPIO_TogglePin(LED_2_GPIO_Port, LED_2_Pin);
-    HAL_Delay(300);
+    if(1==btn1) {
+      HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
+      btn1 = 0;
+    }
+    if(1==btn2) {
+      HAL_GPIO_TogglePin(LED_2_GPIO_Port, LED_2_Pin);
+      btn2 = 0;
+    }
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
@@ -321,12 +326,19 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(LED_2_GPIO_Port, &GPIO_InitStruct);
 
   /* USER CODE BEGIN MX_GPIO_Init_2 */
-
+  
   /* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_PIN) {
+  if (GPIO_PIN == BTN_GREEN_Pin) {
+    btn1 = 1;
+  }
+  if (GPIO_PIN == BTN_RED_Pin) {
+    btn2 = 1;
+  }
+}
 /* USER CODE END 4 */
 
 /**
