@@ -14,7 +14,7 @@
 #define BAT_3		1<<5
 #define BLINK		1<<6
 
-void display(uint8_t symbol, uint8_t* char_array);
-void show();
+void display(LCD_HandleTypeDef handle, uint8_t symbol, uint8_t* char_array);
+void show(LCD_HandleTypeDef handle);
 
 #endif
