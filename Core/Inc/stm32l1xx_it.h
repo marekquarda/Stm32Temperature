@@ -62,6 +62,7 @@ void USB_HP_IRQHandler(void);
 void USB_LP_IRQHandler(void);
 void LCD_IRQHandler(void);
 void SPI1_IRQHandler(void);
+void TIM7_IRQHandler(void);
 /* USER CODE BEGIN EFP */
 
 /* USER CODE END EFP */

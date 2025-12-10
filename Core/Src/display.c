@@ -29,6 +29,38 @@
  *         dot1: SEG31
  *      battery: SEG13
  */
+// position COM for segments in order ABCDEFGH (see "segment map")
+const uint8_t com_key[8] = {3,2,1,0,1,3,2,0};
+
+// position cipher (digits) in LCD RAM (see "segment map")
+const uint32_t digit_segment[6][2] = {
+    {1<<14,1<<15},
+	{1<<24,1<<0},
+	{1<<28,1<<29},
+	{1<<30,1<<31},
+	{1<<7, 1<<8 },
+	{1<<9, 1<<16}
+};
+
+// znakovÃ¡ sada
+const uint8_t charset[12]={
+ // segmenty: HGFEDCBA
+ 0b00111111, // 0
+	0b00000110, // 1
+	0b01011011, // 2
+	0b01001111,	// 3
+	0b01100110, // 4
+	0b01101101, // 5
+	0b01111101, // 6
+	0b00000111, // 7
+	0b01111111, // 8
+	0b01101111, // 9
+	0b00000000,  // blank
+	0b01000000  // znamenko minus
+};
+
+uint8_t disp[6]={0,0,0,0,0,0}; // "defaultnÃ­" hodnota na displeji ("0.00")
+uint8_t i;
 
 void display(uint8_t symbol, uint8_t* char_array) {
     uint32_t com[4]={0,0,0,0}; // budoucÃ­ obsah RAM LCD driveru
@@ -58,7 +90,7 @@ void display(uint8_t symbol, uint8_t* char_array) {
 	if(symbol & COLON){com[0] |= 1<<0;} // dvojteÄka
 
 	// jestli se jeÅ¡tÄ› nestihl dokonÄit poslednÃ­ zÃ¡pis do LCD RAM tak poÄkej
-	while(HAL_LCD_GetState(LCD_FLAG_UDR) != HAL_LCD_ERROR_UDR){};
+	//while(HAL_LCD_GetState(LCD_FLAG_UDR) != HAL_LCD_ERROR_UDR){};
 	// write to RAM
 	// HAL_LCD_Write(LCD_RAM_REGISTER0,com[0]);
 	// HAL_LCD_Write(LCD_RAM_REGISTER2,com[1]);
@@ -72,8 +104,8 @@ void show() {
 	display(0,disp); // "shows" default content of display
 
 	while(1){
-		if(TIM_GetFlagStatus(TIM7,TIM_FLAG_Update) != RESET){ // pokud pÅ™etekl timer
-			TIM_ClearFlag(TIM7,TIM_FLAG_Update); // vyÄistÃ­me vlajku
+		// if(TIM_GetFlagStatus(TIM7,TIM_FLAG_Update) != RESET){ // pokud pÅ™etekl timer
+		// 	TIM_ClearFlag(TIM7,TIM_FLAG_Update); // vyÄistÃ­me vlajku
 			// inkrementujeme poÄÃ­tadlo na displeji
 			disp[5]++; // trocha matematiky ve stylu "jedna jde dÃ¡l"
 			if(disp[5]>9){disp[5]=0;disp[4]++;}
@@ -85,7 +117,7 @@ void show() {
 				for(i=0;i<6;i++){disp[i]=0;} // napoÄÃ­tali jsme 999999s (to se vÃ¡m asi nestane)
 			}
 			display(0,disp); // "zobrazÃ­me" hodnoty na displeji (pÅ™epÃ­Å¡eme obsah LCD RAM)
-		}
+		// }
 	}
 }
 
