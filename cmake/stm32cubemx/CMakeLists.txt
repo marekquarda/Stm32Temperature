@@ -33,6 +33,7 @@ set(MX_Application_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../FATFS/Target/user_diskio.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../FATFS/App/fatfs.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/main.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/display.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/stm32l1xx_it.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/stm32l1xx_hal_msp.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/sysmem.c
@@ -60,6 +61,8 @@ set(STM32_Drivers_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_exti.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_lcd.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_spi.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Drivers/STM32L1xx_HAL_Driver/Src/stm32l1xx_hal_tim_ex.c
 )
 
 # Drivers Midllewares
@@ -89,7 +92,9 @@ set(MX_LINK_DIRS
 set(MX_LINK_LIBS 
     STM32_Drivers
     ${TOOLCHAIN_LINK_LIBRARIES}
-    USB_Device_Library	FatFs	
+    USB_Device_Library
+	FatFs
+	
 )
 # Interface library for includes and symbols
 add_library(stm32cubemx INTERFACE)
