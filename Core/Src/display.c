@@ -91,7 +91,7 @@ void display(LCD_HandleTypeDef handle, uint8_t symbol, uint8_t* char_array) {
 	if(symbol & COLON){com[0] |= 1<<0;} // dvojteÄka
 
 	// jestli se jeÅ¡tÄ› nestihl dokonÄit poslednÃ­ zÃ¡pis do LCD RAM tak poÄkej
-	while(HAL_LCD_GetState(LCD_FLAG_UDR) != HAL_LCD_ERROR_UDR){};
+	//while(HAL_LCD_GetState(LCD_FLAG_UDR) != HAL_LCD_ERROR_UDR){};
 	//write to RAM
 	HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0xFFFFFFFF, com[0]);
 	HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0xFFFFFFFF, com[1]);
@@ -103,9 +103,10 @@ void display(LCD_HandleTypeDef handle, uint8_t symbol, uint8_t* char_array) {
 }
 
 void show(LCD_HandleTypeDef handle) {
-	display(handle,0,disp); // "shows" default content of display
+	//display(handle,0,disp); // "shows" default content of display
 
 	while(1){
+		HAL_Delay(1000);
 		// if(TIM_GetFlagStatus(TIM7,TIM_FLAG_Update) != RESET){ // pokud pÅ™etekl timer
 		// 	TIM_ClearFlag(TIM7,TIM_FLAG_Update); // vyÄistÃ­me vlajku
 			// inkrementujeme poÄÃ­tadlo na displeji
