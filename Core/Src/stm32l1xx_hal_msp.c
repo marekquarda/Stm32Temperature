@@ -108,6 +108,7 @@ void HAL_LCD_MspInit(LCD_HandleTypeDef* hlcd)
     PC4     ------> LCD_SEG22
     PC5     ------> LCD_SEG23
     PB0     ------> LCD_SEG5
+    PB1     ------> LCD_SEG6
     PB12     ------> LCD_SEG12
     PB13     ------> LCD_SEG13
     PB14     ------> LCD_SEG14
@@ -119,7 +120,6 @@ void HAL_LCD_MspInit(LCD_HandleTypeDef* hlcd)
     PA8     ------> LCD_COM0
     PA9     ------> LCD_COM1
     PA10     ------> LCD_COM2
-    PB4     ------> LCD_SEG8
     PB9     ------> LCD_COM3
     */
     GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10;
@@ -137,8 +137,8 @@ void HAL_LCD_MspInit(LCD_HandleTypeDef* hlcd)
     GPIO_InitStruct.Alternate = GPIO_AF11_LCD;
     HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14
-                          |GPIO_PIN_15|GPIO_PIN_4|GPIO_PIN_9;
+    GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_12|GPIO_PIN_13
+                          |GPIO_PIN_14|GPIO_PIN_15|GPIO_PIN_9;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -177,6 +177,7 @@ void HAL_LCD_MspDeInit(LCD_HandleTypeDef* hlcd)
     PC4     ------> LCD_SEG22
     PC5     ------> LCD_SEG23
     PB0     ------> LCD_SEG5
+    PB1     ------> LCD_SEG6
     PB12     ------> LCD_SEG12
     PB13     ------> LCD_SEG13
     PB14     ------> LCD_SEG14
@@ -188,7 +189,6 @@ void HAL_LCD_MspDeInit(LCD_HandleTypeDef* hlcd)
     PA8     ------> LCD_COM0
     PA9     ------> LCD_COM1
     PA10     ------> LCD_COM2
-    PB4     ------> LCD_SEG8
     PB9     ------> LCD_COM3
     */
     HAL_GPIO_DeInit(GPIOA, GPIO_PIN_3|GPIO_PIN_8|GPIO_PIN_9|GPIO_PIN_10);
@@ -196,8 +196,8 @@ void HAL_LCD_MspDeInit(LCD_HandleTypeDef* hlcd)
     HAL_GPIO_DeInit(GPIOC, GPIO_PIN_4|GPIO_PIN_5|GPIO_PIN_6|GPIO_PIN_7
                           |GPIO_PIN_8|GPIO_PIN_9);
 
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_12|GPIO_PIN_13|GPIO_PIN_14
-                          |GPIO_PIN_15|GPIO_PIN_4|GPIO_PIN_9);
+    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_0|GPIO_PIN_1|GPIO_PIN_12|GPIO_PIN_13
+                          |GPIO_PIN_14|GPIO_PIN_15|GPIO_PIN_9);
 
     /* LCD interrupt DeInit */
     HAL_NVIC_DisableIRQ(LCD_IRQn);

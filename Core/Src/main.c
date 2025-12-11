@@ -111,8 +111,9 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-    show(hlcd);
+    
     /* USER CODE BEGIN 3 */
+    show(hlcd);
   }
   /* USER CODE END 3 */
 }
@@ -190,7 +191,7 @@ static void MX_LCD_Init(void)
   hlcd.Init.Duty = LCD_DUTY_1_4;
   hlcd.Init.Bias = LCD_BIAS_1_3;
   hlcd.Init.VoltageSource = LCD_VOLTAGESOURCE_INTERNAL;
-  hlcd.Init.Contrast = LCD_CONTRASTLEVEL_4;
+  hlcd.Init.Contrast = LCD_CONTRASTLEVEL_0;
   hlcd.Init.DeadTime = LCD_DEADTIME_0;
   hlcd.Init.PulseOnDuration = LCD_PULSEONDURATION_0;
   hlcd.Init.MuxSegment = LCD_MUXSEGMENT_DISABLE;

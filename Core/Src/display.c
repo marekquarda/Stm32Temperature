@@ -93,10 +93,15 @@ void display(LCD_HandleTypeDef handle, uint8_t symbol, uint8_t* char_array) {
 	// jestli se jeÅ¡tÄ› nestihl dokonÄit poslednÃ­ zÃ¡pis do LCD RAM tak poÄkej
 	//while(HAL_LCD_GetState(LCD_FLAG_UDR) != HAL_LCD_ERROR_UDR){};
 	//write to RAM
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0xFFFFFFFF, com[0]);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0xFFFFFFFF, com[1]);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0xFFFFFFFF, com[2]);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0xFFFFFFFF, com[3]);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0xF00F0066, com[0]);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0xF00F0066, com[1]);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0xF00F0066, com[2]);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0xF00F0066, com[3]);
+
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0xF00F0066, 0xFFFFFFFF);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0xF00F0066, 0xFFFFFFFF);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0xF00F0066, 0xFFFFFFFF);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0xF00F0066, 0xFFFFFFFF);
 
 	// Update the LCD display 
 	HAL_LCD_UpdateDisplayRequest(&handle); 
