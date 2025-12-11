@@ -98,10 +98,10 @@ void display(LCD_HandleTypeDef handle, uint8_t symbol, uint8_t* char_array) {
 	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0xF00F0066, com[2]);
 	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0xF00F0066, com[3]);
 
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0x00000000, 0x0F00F000);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0x00000000, 0x0F00F000);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0x00000000, 0x0F00F000);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0x00000000, 0x0500B000);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0x00000000, 0x0FC0F060);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0x00000000, 0x0FC0F060);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0x00000000, 0x0FC0F060);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0x00000000, 0x05C0B060);
 
 	HAL_LCD_UpdateDisplayRequest(&handle); 
 
