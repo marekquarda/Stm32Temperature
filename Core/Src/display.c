@@ -98,20 +98,35 @@ void display(LCD_HandleTypeDef handle, uint8_t symbol, uint8_t* char_array) {
 	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0xF00F0066, com[2]);
 	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0xF00F0066, com[3]);
 
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0xF00F0066, 0xFFFFFFFF);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0xF00F0066, 0xFFFFFFFF);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0xF00F0066, 0xFFFFFFFF);
-	HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0xF00F0066, 0xFFFFFFFF);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0x00000000, 0x0F00F000);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0x00000000, 0x0F00F000);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0x00000000, 0x0F00F000);
+	HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0x00000000, 0x0500B000);
 
-	// Update the LCD display 
 	HAL_LCD_UpdateDisplayRequest(&handle); 
+
+	// HAL_Delay(1000);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0x00000006, 0x0000FFFF);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0x0F00F066, 0x0000FFFF);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0x0F00F066, 0x0000FFFF);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0x0F00F066, 0x0000FFFF);
+
+	// // Update the LCD display 
+	// HAL_LCD_UpdateDisplayRequest(&handle); 
+
+	// HAL_Delay(1000);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER0, 0x0F00F066, 0xFFFF0000);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER2, 0x0F00F066, 0xFFFF0000);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER4, 0x0F00F066, 0xFFFF0000);
+	// HAL_LCD_Write(&handle, LCD_RAM_REGISTER6, 0x0F00F066, 0xFFFF0000);
+	// HAL_LCD_UpdateDisplayRequest(&handle); 
 }
 
 void show(LCD_HandleTypeDef handle) {
 	//display(handle,0,disp); // "shows" default content of display
 
 	while(1){
-		HAL_Delay(1000);
+	//	HAL_Delay(1000);
 		// if(TIM_GetFlagStatus(TIM7,TIM_FLAG_Update) != RESET){ // pokud pÅ™etekl timer
 		// 	TIM_ClearFlag(TIM7,TIM_FLAG_Update); // vyÄistÃ­me vlajku
 			// inkrementujeme poÄÃ­tadlo na displeji
