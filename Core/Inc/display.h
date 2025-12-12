@@ -69,6 +69,43 @@
 #define COM3_SYMBOL_NONE_4              0x0000004
 #define COM3_SYMBOL_MIN_S               0x0000002
 
+// uint32_t Display_Zero[1] = {
+//     COM0_NUMBER_ONE,
+//     COM1_NUMBER_ONE_DOT
+// };
+
+// const int Display_One[8] = {
+//     COM0_NUMBER_1A,
+//     COM1_NUMBER_1B, 
+//     COM2_NUMBER_1C, 
+//     COM3_NUMBER_1D, 
+//     COM0_NUMBER_1E, 
+//     COM1_NUMBER_1F,
+//     COM2_NUMBER_1G, 
+//     COM3_NUMBER_1_DOT
+// };
+
+// int Display_Two[7] = {
+//     COM0_NUMBER_2A,
+//     COM1_NUMBER_2B, 
+//     COM2_NUMBER_2C, 
+//     COM3_NUMBER_2D, 
+//     COM0_NUMBER_2E, 
+//     COM1_NUMBER_2F,
+//     COM2_NUMBER_2G, 
+//     COM3_NUMBER_2_DOT
+// };
+
+// int Display_Three[6] = {
+//     COM0_NUMBER_3A,
+//     COM1_NUMBER_3B, 
+//     COM2_NUMBER_3C, 
+//     COM3_NUMBER_3D, 
+//     COM0_NUMBER_3E, 
+//     COM1_NUMBER_3F,
+//     COM2_NUMBER_3G 
+// };
+
 typedef enum {
     COM0,
     COM1,
@@ -77,50 +114,34 @@ typedef enum {
 } Coms;
 
 // typedef enum {
-
-// } Com0_symbols;
-
-// typedef enum {
-
-// } Com1_symbols;
-
-// typedef enum {
-
-// } Com2_symbols;
+//     NUMBER_1A = COM0_NUMBER_1A,
+//     NUMBER_1B = COM1_NUMBER_1B,
+//     NUMBER_1C = COM2_NUMBER_1C,
+//     NUMBER_1D = COM3_NUMBER_1D,
+//     NUMBER_1E = COM0_NUMBER_1E,
+//     NUMBER_1F = COM1_NUMBER_1F,
+//     NUMBER_1G = COM2_NUMBER_1G,
+// } Position_one;
 
 // typedef enum {
+//     NUMBER_2A = COM0_NUMBER_2A,
+//     NUMBER_2B = COM1_NUMBER_2B,
+//     NUMBER_2C = COM2_NUMBER_2C,
+//     NUMBER_2D = COM3_NUMBER_2D,
+//     NUMBER_2E = COM0_NUMBER_2E,
+//     NUMBER_2F = COM1_NUMBER_2F,
+//     NUMBER_2G = COM2_NUMBER_2G,
+// } Position_two;
 
-// } Com3_symbols;
-
-typedef enum {
-    NUMBER_1A = COM0_NUMBER_1A,
-    NUMBER_1B = COM1_NUMBER_1B,
-    NUMBER_1C = COM2_NUMBER_1C,
-    NUMBER_1D = COM3_NUMBER_1D,
-    NUMBER_1E = COM0_NUMBER_1E,
-    NUMBER_1F = COM1_NUMBER_1F,
-    NUMBER_1G = COM2_NUMBER_1G,
-} Position_one;
-
-typedef enum {
-    NUMBER_2A = COM0_NUMBER_2A,
-    NUMBER_2B = COM1_NUMBER_2B,
-    NUMBER_2C = COM2_NUMBER_2C,
-    NUMBER_2D = COM3_NUMBER_2D,
-    NUMBER_2E = COM0_NUMBER_2E,
-    NUMBER_2F = COM1_NUMBER_2F,
-    NUMBER_2G = COM2_NUMBER_2G,
-} Position_two;
-
-typedef enum {
-    NUMBER_3A = COM0_NUMBER_3A,
-    NUMBER_3B = COM1_NUMBER_3B,
-    NUMBER_3C = COM2_NUMBER_3C,
-    NUMBER_3D = COM3_NUMBER_3D,
-    NUMBER_3E = COM0_NUMBER_3E,
-    NUMBER_3F = COM1_NUMBER_3F,
-    NUMBER_3G = COM2_NUMBER_3G,
-} Position_three;
+// typedef enum {
+//     NUMBER_3A = COM0_NUMBER_3A,
+//     NUMBER_3B = COM1_NUMBER_3B,
+//     NUMBER_3C = COM2_NUMBER_3C,
+//     NUMBER_3D = COM3_NUMBER_3D,
+//     NUMBER_3E = COM0_NUMBER_3E,
+//     NUMBER_3F = COM1_NUMBER_3F,
+//     NUMBER_3G = COM2_NUMBER_3G,
+// } Position_three;
 
 typedef enum {
     NUMBER_0,
@@ -133,6 +154,8 @@ typedef enum {
     NUMBER_7,
     NUMBER_8,                        
     NUMBER_9,                        
+    NUMBER_BLANK,
+    NUMBER_DASH
 } Number;
 
 typedef enum {
@@ -145,8 +168,10 @@ typedef enum {
 
 void display(LCD_HandleTypeDef handle, uint32_t *symbols);
 void clearDisp(uint32_t* symbols);
-void addSymbol(Coms com, uint32_t value, uint32_t *symbols);
-//int* getNumber(Position position, Number number, int* symbols);
+void getSymbol(Number number, Position pos, int* numset, uint32_t *button);
+void getZero(Number number, int* numset, uint32_t* value);
+uint32_t* getNumber(Number number, int* numset, uint32_t* value);
+//void addSymbol(Coms com, uint32_t value, uint32_t *symbols);
 void show(LCD_HandleTypeDef handle);
 
 #endif
