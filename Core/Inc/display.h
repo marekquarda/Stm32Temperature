@@ -89,7 +89,15 @@ typedef enum {
 	NUMBER_8 = 0b01111111,      // 8
 	NUMBER_9 = 0b01101111,      // 9
 	NUMBER_BLANK = 0b00000000,  // blank
-	NUMBER_DASH = 0b01000000    // minus                    
+	NUMBER_DASH = 0b01000000,   // minus                    
+    NO_SYMBOL_U = 0b00111110,   // U
+    NO_SYMBOL_A = 0b01110111,   // A
+    NO_SYMBOL_C = 0b00111001,   // C
+    NO_SYMBOL_E = 0b01111001,   // E
+    NO_SYMBOL_F = 0b01110001,   // F
+    NO_SYMBOL_Y = 0b01100110,   // Y
+    NO_SYMBOL_L = 0b00111000,   // L - Long
+    NO_SYMBOL_S = 0b01101101,   // 5 - Short
 } Number;
 
 typedef enum {
