@@ -342,9 +342,11 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if (GPIO_Pin == BTN_GREEN_Pin) {
+    HAL_GPIO_TogglePin(LED_1_GPIO_Port, LED_1_Pin);
     btn1 = 1;
   }
   if (GPIO_Pin == BTN_RED_Pin) {
+    HAL_GPIO_TogglePin(LED_2_GPIO_Port, LED_2_Pin);
     btn2 = 1;
   }
 }
