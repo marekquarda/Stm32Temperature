@@ -108,8 +108,8 @@ void showTime() {
 	uint8_t minutes[2];
 	uint8_t second[2];
 	getFormatTime(hours, minutes, second);
-	getSymbol(getNumberEnum(second[0]),POSITION_3, symbols_mem);
-	getSymbol(getNumberEnum(second[1]),POSITION_2, symbols_mem);
+	getSymbol(getNumberEnum(minutes[0]),POSITION_3, symbols_mem);
+	getSymbol(getNumberEnum(minutes[1]),POSITION_2, symbols_mem);
 	display(symbols_mem);
 }
 
