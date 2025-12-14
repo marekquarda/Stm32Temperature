@@ -24,6 +24,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "display.h"
+#include "menu.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -49,8 +50,6 @@ SPI_HandleTypeDef hspi1;
 TIM_HandleTypeDef htim7;
 
 /* USER CODE BEGIN PV */
-uint8_t btn1=0;
-uint8_t btn2=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -103,7 +102,8 @@ int main(void)
   MX_FATFS_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
-
+  initDisplay(hlcd);
+  initMenu();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,7 +113,9 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    show(hlcd);
+    testPress();
+    //testLcd();
+    //show(hlcd);
   }
   /* USER CODE END 3 */
 }
@@ -343,11 +345,11 @@ static void MX_GPIO_Init(void)
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if (GPIO_Pin == BTN_GREEN_Pin) {
     HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-    btn1 = 1;
+    greenMenuButton.buttonFlag.bit.B0 = SET;
   }
   if (GPIO_Pin == BTN_RED_Pin) {
     HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-    btn2 = 1;
+    redMenuButton.buttonFlag.bit.B0 = SET;
   }
 }
 /* USER CODE END 4 */

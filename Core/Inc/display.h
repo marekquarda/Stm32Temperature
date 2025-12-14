@@ -98,6 +98,7 @@ typedef enum {
     NO_SYMBOL_Y = 0b01100110,   // Y
     NO_SYMBOL_L = 0b00111000,   // L - Long
     NO_SYMBOL_S = 0b01101101,   // 5 - Short
+    NO_SYMBOL_H = 0b01110110    // H
 } Number;
 
 typedef enum {
@@ -107,12 +108,15 @@ typedef enum {
     POSITION_3
 } Position;
 
+extern uint32_t symbols_mem[3];
 
-void display(LCD_HandleTypeDef handle, uint32_t *symbols);
+void initDisplay(LCD_HandleTypeDef handle);
+void display(uint32_t *symbols);
 void clearDisp(uint32_t* symbols);
-void getSymbol(Number number, Position pos, int* numset, uint32_t *button);
+void getSymbol(Number number, Position pos, uint32_t *button);
 void getZero(Number number, int* numset, uint32_t* value);
 void getNumber(Number number, int* numset, uint32_t* value);
-void show(LCD_HandleTypeDef handle);
+//
+void testLcd();
 
 #endif
