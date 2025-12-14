@@ -4,8 +4,9 @@
 #include "main.h"
 #include "stm32l1xx_hal_rtc.h"
 
-RTC_TimeTypeDef sTime;
-RTC_DateTypeDef sDate;
 
+void initTime(RTC_HandleTypeDef time);
+void getTime(void);
+void getDate(void);
 
 #endif

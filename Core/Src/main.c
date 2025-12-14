@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 #include "display.h"
 #include "menu.h"
+#include "clock.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -106,6 +107,7 @@ int main(void)
   MX_TIM7_Init();
   MX_RTC_Init();
   /* USER CODE BEGIN 2 */
+  initTime(hrtc);
   initDisplay(hlcd);
   initMenu();
   /* USER CODE END 2 */
