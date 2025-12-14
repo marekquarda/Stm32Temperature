@@ -11,17 +11,30 @@ void initTime(RTC_HandleTypeDef hrtc) {
     time = hrtc;
 }
 
-void getTime(uint8_t hours, uint8_t minute, uint8_t second) {
+// private methods
+void getTime() {
     HAL_RTC_GetTime(&time, &sTime, RTC_FORMAT_BCD);
-    hours = sTime.Hours;
-    minute = sTime.Minutes;
-    second = sTime.Seconds;
 }
 
-void getDate(uint8_t day, uint8_t month, uint8_t year, uint8_t weekAday) {
+void getDate() {
     HAL_RTC_GetDate(&time, &sDate, RTC_FORMAT_BCD);
-    day = sDate.Date;
-    month = sDate.Month;
-    year = sDate.Year;
-    weekAday = sDate.WeekDay;
+}
+
+void getArrayFromBCD(uint8_t bcd, uint8_t *output) {
+    output[0] = bcd & 0x0F;
+    output[1] = (bcd >> 4) & 0x0F;
+}
+
+// public methods
+void getFormatTime(uint8_t* hours, uint8_t* minute, uint8_t* second) {
+    getArrayFromBCD(sTime.Hours, hours);
+    getArrayFromBCD(sTime.Minutes, minute);
+    getArrayFromBCD(sTime.Seconds, second);
+}
+
+void getFormatDate(uint8_t* day, uint8_t* month, uint8_t* year, uint8_t* weekAday) {
+    getArrayFromBCD(sDate.Date, day);
+    getArrayFromBCD(sDate.Month, month);
+    getArrayFromBCD(sDate.Year, year);
+    getArrayFromBCD(sDate.WeekDay, weekAday);
 }

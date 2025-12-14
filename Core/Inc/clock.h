@@ -6,7 +6,7 @@
 
 
 void initTime(RTC_HandleTypeDef time);
-void getTime(uint8_t hours, uint8_t minute, uint8_t second);
-void getDate(uint8_t day, uint8_t month, uint8_t year, uint8_t weekAday);
+void getFormatTime(uint8_t* hours, uint8_t* minute, uint8_t* second);
+void getFormatDate(uint8_t* day, uint8_t* month, uint8_t* year, uint8_t* weekAday);
 
 #endif
