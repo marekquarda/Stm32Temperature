@@ -111,8 +111,10 @@ typedef enum {
 extern uint32_t symbols_mem[3];
 
 void initDisplay(LCD_HandleTypeDef handle);
+void reloadDisplay(void);
 void display(uint32_t *symbols);
 void clearDisp(uint32_t* symbols);
+Number getNumberEnum(uint8_t number);
 void getSymbol(Number number, Position pos, uint32_t *button);
 void getZero(Number number, int* numset, uint32_t* value);
 void getNumber(Number number, int* numset, uint32_t* value);

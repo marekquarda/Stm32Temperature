@@ -1,4 +1,5 @@
 #include "display.h"
+#include "clock.h"
 
 /* Displej TempTale Ultra
  *
@@ -99,6 +100,22 @@ uint32_t SymbolsCom3[8] = {
 
 void initDisplay(LCD_HandleTypeDef handle) {
 	lcd = handle;
+}
+
+void showTime() {
+	clearDisp(symbols_mem);
+	uint8_t hours[2];
+	uint8_t minutes[2];
+	uint8_t second[2];
+	getFormatTime(hours, minutes, second);
+	getSymbol(getNumberEnum(second[0]),POSITION_3, symbols_mem);
+	getSymbol(getNumberEnum(second[1]),POSITION_2, symbols_mem);
+	display(symbols_mem);
+}
+
+
+void reloadDisplay(void) {
+	showTime();
 }
 
 void display(uint32_t* symbols) {
@@ -313,6 +330,32 @@ void getSymbol(Number number, Position pos, uint32_t* value) {
 		break;		
 	default: // Position 1,2,3
 		break;
+	}
+}
+
+Number getNumberEnum(uint8_t number) {
+	switch (number)
+	{
+	case 0:
+		return NUMBER_0;
+	case 1:
+		return NUMBER_1;
+	case 2:
+		return NUMBER_2;
+	case 3:
+		return NUMBER_3;
+	case 4:
+		return NUMBER_4;
+	case 5:
+		return NUMBER_5;
+	case 6:
+		return NUMBER_6;
+	case 7:
+		return NUMBER_7;
+	case 8:
+		return NUMBER_8;
+	case 9:
+		return NUMBER_9;
 	}
 }
 
