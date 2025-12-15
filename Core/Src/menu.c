@@ -6,6 +6,10 @@
 MenuButton_t redMenuButton;
 MenuButton_t greenMenuButton;
 
+ButtonValues choose = BTN_NONE;
+MenuPosition position = DEFAULT_POS;
+
+
 void initMenu(void) {
     redMenuButton.buttonFlag.data = RESET;
     redMenuButton.buttonStatus = MenuButtonStatus_notPressed;
@@ -13,6 +17,44 @@ void initMenu(void) {
     greenMenuButton.buttonFlag.data = RESET;
     greenMenuButton.buttonStatus = MenuButtonStatus_notPressed;
 };
+
+ButtonValues GetButtonPress(void) {
+    return choose;
+};
+
+MenuPosition GetMenuPostion(void) {
+    return position;
+};
+
+void SetMenuPosition(MenuPosition pos) {
+    position = pos;
+};
+
+void ChooseItem(void) {
+    switch (GetButtonPress())
+    {
+    case BTN_GREEN_CLK:
+        Menu_Navigate(MENU_PREVIOUS);
+        break;
+    case BTN_GREEN_LONG_CLK:
+        Menu_Navigate(MENU_PARENT);
+        break;
+    case BTN_GREEN_DBL_CLK:
+        // TODO: Need to insert
+        break;
+    case BTN_RED_CLK:
+        Menu_Navigate(MENU_NEXT);
+        break;
+    case BTN_RED_LONG_CLK:
+        Menu_Navigate(MENU_CHILD);
+        break;
+    case BTN_RED_DBL_CLK:
+        // TODO: Need to insert
+        break;        
+    default:
+        break;
+    }
+}
 
 void testPress(void) {
     // Red Button
@@ -43,16 +85,25 @@ void testPress(void) {
         switch (redMenuButton.buttonStatus)
         {
         case MenuButtonStatus_oneClick:
+            // set button event
+            choose = BTN_RED_CLK;
+            // set display
             clearDisp(symbols_mem);
             getSymbol(NO_SYMBOL_C, POSITION_3, symbols_mem);
 	        display(symbols_mem);
             break;
         case MenuButtonStatus_doubleClick:
+            // set button event
+            choose = BTN_RED_DBL_CLK;
+            // set display
             clearDisp(symbols_mem);
             getSymbol(NUMBER_8, POSITION_3, symbols_mem);
 	        display(symbols_mem);
             break;
         case MenuButtonStatus_heldPressed:
+            // set button event
+            choose = BTN_RED_LONG_CLK;
+            // set display
             clearDisp(symbols_mem);
             getSymbol(NO_SYMBOL_H, POSITION_3, symbols_mem);
 	        display(symbols_mem);
@@ -95,20 +146,30 @@ void testPress(void) {
         switch (greenMenuButton.buttonStatus)
         {
         case MenuButtonStatus_oneClick:
+            // set button event
+            choose = BTN_GREEN_CLK;
+            // set display
             clearDisp(symbols_mem);
             getSymbol(NO_SYMBOL_C, POSITION_1, symbols_mem);
 	        display(symbols_mem);
             break;
         case MenuButtonStatus_doubleClick:
+            // set button event
+            choose = BTN_GREEN_DBL_CLK;
+            // set display
             clearDisp(symbols_mem);
             getSymbol(NUMBER_8, POSITION_1, symbols_mem);
 	        display(symbols_mem);
             break;
         case MenuButtonStatus_heldPressed:
+            // set button event
+            choose = BTN_GREEN_LONG_CLK;
+            // set display
             clearDisp(symbols_mem);
             getSymbol(NO_SYMBOL_H, POSITION_1, symbols_mem);
 	        display(symbols_mem);
         case MenuButtonStatus_notPressed:
+            
             clearDisp(symbols_mem);
             getSymbol(NO_SYMBOL_L, POSITION_1, symbols_mem);
 	        display(symbols_mem);
@@ -118,6 +179,7 @@ void testPress(void) {
         greenMenuButton.buttonHeldPressedCounter = RESET;
         greenMenuButton.buttonStatus = MenuButtonStatus_notPressed;
     }
+    ChooseItem();
 };
 
 uint8_t MenuButton_Debounce(void) {

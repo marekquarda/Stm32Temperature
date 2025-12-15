@@ -26,6 +26,26 @@ typedef union
     
 } Flag8_t;
 
+typedef enum {
+    BTN_NONE,
+    BTN_GREEN_CLK,
+    BTN_GREEN_DBL_CLK,
+    BTN_GREEN_LONG_CLK,
+    BTN_RED_CLK,
+    BTN_RED_DBL_CLK,
+    BTN_RED_LONG_CLK
+} ButtonValues;
+
+typedef enum {
+    DEFAULT_POS,
+    SETTING_MODE
+} MenuPosition;
+
+// Menu settings
+ButtonValues GetButtonPress(void);
+MenuPosition GetMenuPostion(void);
+void SetMenuPosition(MenuPosition);
+void ChooseItem(void);
 
 typedef enum 
 {
