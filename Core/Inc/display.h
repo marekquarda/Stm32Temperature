@@ -111,7 +111,7 @@ typedef enum {
 extern uint32_t symbols_mem[3];
 
 void initDisplay(LCD_HandleTypeDef handle);
-void reloadDisplay(void);
+void reloadDisplay(RTC_DateTypeDef myDate, RTC_TimeTypeDef myTime);
 void display(uint32_t *symbols);
 void logComPort(uint8_t* hour, uint8_t* minute, uint8_t* second);
 void clearDisp(uint32_t* symbols);

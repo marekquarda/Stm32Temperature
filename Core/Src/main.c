@@ -73,7 +73,8 @@ static void MX_TIM2_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+RTC_TimeTypeDef myTime;
+RTC_DateTypeDef myDate;
 /* USER CODE END 0 */
 
 /**
@@ -113,7 +114,7 @@ int main(void)
   MX_RTC_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  initTime(hrtc);
+  //initTime(hrtc);
   initDisplay(hlcd);
   initMenu();
   HAL_TIM_Base_Start_IT(&htim2);
@@ -474,10 +475,12 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   }
 }
 
-HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if(htim -> Instance == TIM2) {
     HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-    reloadDisplay();
+    HAL_RTC_GetTime(&hrtc, &myTime, RTC_FORMAT_BCD);
+    HAL_RTC_GetDate(&hrtc, &myDate, RTC_FORMAT_BCD);
+    reloadDisplay(myDate, myTime);
   }
 }
 
