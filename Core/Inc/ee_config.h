@@ -2,20 +2,8 @@
 /*
  * @file        ee_config.h
  * @brief       EEPROM Emulation Library
- * @author      Nima Askari
+ * @author      Marek Quarda
  * @version     4.0.0
- * @license     See the LICENSE file in the root folder.
- *
- * @note        All my libraries are dual-licensed.
- *              Please review the licensing terms before using them.
- *              For any inquiries, feel free to contact me.
- *
- * @github      https://www.github.com/nimaltd
- * @linkedin    https://www.linkedin.com/in/nimaltd
- * @youtube     https://www.youtube.com/@nimaltd
- * @instagram   https://instagram.com/github.nimaltd
- *
- * Copyright (C) 2025 Nima Askari - NimaLTD. All rights reserved.
  */
 
 #ifndef _EE_CONFIG_H_
