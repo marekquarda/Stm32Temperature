@@ -22,7 +22,7 @@ uint32_t symbols_mem[3];
 uint8_t sendBuffer[128];
 LCD_HandleTypeDef lcd;
 
-uint32_t Display_Zero[2] = {
+int Display_Zero[2] = {
     COM0_NUMBER_ONE,
     COM1_NUMBER_ONE_DOT
 };
@@ -137,180 +137,7 @@ void display(uint32_t* symbols) {
 void testLcd() {
 	clearDisp(symbols_mem);
 
-	// display zero
-	getSymbol(NUMBER_1, POSITION_0, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	// display one
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_0, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_1, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_2, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_3, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_4, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_5, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_6, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_7, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_8, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_9, POSITION_1, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-
-	// Display two
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_0, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_1, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_2, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_3, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_4, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_5, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_6, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_7, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_8, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_9, POSITION_2, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-
-	// display three
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_0, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_1, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_2, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_3, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_4, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_5, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_6, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_7, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_8, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-	getSymbol(NUMBER_9, POSITION_3, symbols_mem);
-	display(symbols_mem);
-	HAL_Delay(200);
-	clearDisp(symbols_mem);
-
-	// display all numbers
-	getSymbol(NUMBER_1, POSITION_0, symbols_mem);
-	getSymbol(NUMBER_8, POSITION_1, symbols_mem);
-	getSymbol(NUMBER_8, POSITION_2, symbols_mem);
-	getSymbol(NUMBER_8, POSITION_3, symbols_mem);
-	// symbols_mem[3] |= COM3_NUMBER_1_DOT;
-	// symbols_mem[3] |= COM3_NUMBER_2_DOT;
-	display(symbols_mem);
-	// Symbols Con0 
-	for (int i = 0; i < 8; ++i) {
-		symbols_mem[0] |= SymbolsCom0[i];
-		display(symbols_mem);
-		HAL_Delay(200);
-	}
-
-	// Symbols Con0 
-	for (int j = 0; j < 8; ++j) {
-		symbols_mem[1] |= SymbolsCom1[j];
-		display(symbols_mem);
-		HAL_Delay(200);
-	}
-
-	for (int k = 0; k < 8; ++k) {
-		symbols_mem[2] |= SymbolsCom2[k];
-		display(symbols_mem);
-		HAL_Delay(200);
-	}
-
-	for (int l = 0; l < 9; ++l) {
-		symbols_mem[3] |= SymbolsCom3[l];
-		display(symbols_mem);
-		HAL_Delay(200);
-	}
-
 	while(1){
-	//	HAL_Delay(1000);
-		// if(TIM_GetFlagStatus(TIM7,TIM_FLAG_Update) != RESET){ // pokud pÅ™etekl timer
-		// 	TIM_ClearFlag(TIM7,TIM_FLAG_Update); // vyÄistÃ­me vlajku
-			//display(handle,0,disp); // "zobrazÃ­me" hodnoty na displeji (pÅ™epÃ­Å¡eme obsah LCD RAM)
-		// }
-
 	}
 }
 
@@ -381,7 +208,7 @@ void getNumber(Number number, int* numset, uint32_t* value) {
 	}
 }
 
-void getZero(Number number, int* numset, uint32_t* value) {
+void getZero(Number number, int* numset, u_int32_t* value) {
 	switch (number)
 	{
 	case NUMBER_1:
