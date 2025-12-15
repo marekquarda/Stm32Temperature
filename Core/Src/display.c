@@ -1,5 +1,6 @@
 #include "display.h"
 #include "clock.h"
+#include "usbd_cdc.h"
 
 /* Displej TempTale Ultra
  *
@@ -18,6 +19,7 @@
  */
 
 uint32_t symbols_mem[3];
+uint8_t sendBuffer[128];
 LCD_HandleTypeDef lcd;
 
 uint32_t Display_Zero[2] = {
@@ -111,8 +113,13 @@ void showTime() {
 	getSymbol(getNumberEnum(hours[0]),POSITION_3, symbols_mem);
 	getSymbol(getNumberEnum(hours[1]),POSITION_2, symbols_mem);
 	display(symbols_mem);
+	logComPort(hours, minutes, second);
 }
 
+void logComPort(uint8_t* hour, uint8_t* minutes, uint8_t* second) {
+	snprintf((char*) sendBuffer, sizeof(sendBuffer), "Time: %01d%01d:%01d%01d:%01d%01d\r\n", hour[1], hour[0], minutes[1], minutes[0], second[1], second[0]);
+    CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
+}
 
 void reloadDisplay(void) {
 	showTime();

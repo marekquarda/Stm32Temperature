@@ -113,6 +113,7 @@ extern uint32_t symbols_mem[3];
 void initDisplay(LCD_HandleTypeDef handle);
 void reloadDisplay(void);
 void display(uint32_t *symbols);
+void logComPort(uint8_t* hour, uint8_t* minute, uint8_t* second);
 void clearDisp(uint32_t* symbols);
 Number getNumberEnum(uint8_t number);
 void getSymbol(Number number, Position pos, uint32_t *button);

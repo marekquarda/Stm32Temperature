@@ -23,6 +23,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "usbd_cdc.h"
 #include "display.h"
 #include "menu.h"
 #include "clock.h"
@@ -35,7 +36,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define USB_BUFLEN 128
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -54,6 +55,8 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim7;
 
 /* USER CODE BEGIN PV */
+uint8_t usbTxBuf[USB_BUFLEN];
+uint16_t usbTxBufLen;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
