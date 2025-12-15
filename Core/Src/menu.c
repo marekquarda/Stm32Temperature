@@ -56,6 +56,103 @@ void ChooseItem(void) {
     }
 }
 
+void setTimeVal(ButtonSet value) {
+    switch (value)
+    {
+    case TIME_SET_UP:
+        //TODO: need to insert
+        break;
+    case TIME_SET_DOWN:
+        //TODO: need to insert
+        break;
+    default:
+        break;
+    }
+    printValue(PRINT_TIME);
+}
+
+void setDateVal(ButtonSet value) {
+    switch(value)
+    {
+    case DATE_SET_UP:
+        //TODO: need to insert
+        break;
+    case DATE_SET_DOWN:
+        //TODO: need to insert
+        break;
+    default:
+        break;        
+    }
+    printValue(PRINT_DATE);
+}
+
+void printValue(PrintValues value) {
+    switch (value)
+    {
+    case PRINT_TIME:
+        //TODO: need to insert
+        break;
+    case PRINT_DATE:
+        //TODO: need to insert
+        break;
+    default:
+
+        break;
+    }
+}
+
+static void Time_Select(void) {
+    // TODO: need to insert
+}
+
+static void Date_Select(void) {
+    // TODO: need to insert
+}
+
+static void Time_Setting_Up(void) {
+    // TODO: need to insert
+}
+
+static void Time_Setting_Down(void) {
+    // TODO: need to insert
+}
+
+static void Date_Setting_Up(void) {
+    // TODO: need to insert
+}
+
+static void Date_Setting_Down(void) {
+    // TODO: need to insert
+}
+
+static void Time_Save() {
+    // TODO: need to insert
+}
+
+static void Date_Save() {
+    // TODO: need to insert
+}
+
+// Menu Initialization
+MENU_ITEM(Menu_1, Menu_2, Menu_1, NULL_MENU, Menu_1_1, Time_Select, NULL, NULL, NULL, "1");
+MENU_ITEM(Menu_2, Menu_2, Menu_1, NULL_MENU, Menu_2_2, Date_Select, NULL, NULL, NULL, "2");
+
+// Time SubMenu initialization
+MENU_ITEM(Menu_1_1, Menu_1_2, Menu_1_1, Menu_ST, NULL_MENU, Time_Setting_Up, NULL, NULL, NULL, "1.1");
+MENU_ITEM(Menu_1_2, Menu_1_1, Menu_1_1, Menu_ST, NULL_MENU, Time_Setting_Down, NULL, NULL, NULL, "1.2");
+
+// Date SubMenu initialization
+MENU_ITEM(Menu_2_1, Menu_2_2, Menu_2_1, Menu_SD, NULL_MENU, Date_Setting_Up, NULL, NULL, NULL, "2.1");
+MENU_ITEM(Menu_2_2, Menu_2_1, Menu_2_1, Menu_SD, NULL_MENU, Date_Setting_Down, NULL, NULL, NULL, "2.2");
+
+MENU_ITEM(Menu_ST, NULL_MENU, NULL_MENU, Menu_1, NULL_MENU, Time_Save, NULL, NULL, NULL, "3.0");
+MENU_ITEM(Menu_SD, NULL_MENU, NULL_MENU, Menu_2, NULL_MENU, Date_Save, NULL, NULL, NULL, "3.0");
+
+void InitMenu() {
+    // Init menu 
+    Menu_Navigate(&Menu_1);
+}
+
 void testPress(void) {
     // Red Button
     if (redMenuButton.buttonFlag.bit.B0) {

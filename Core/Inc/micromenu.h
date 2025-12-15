@@ -222,4 +222,26 @@ char *strncpy_const(char *dest, MENU_ITEM_STORAGE char *src, size_t n);
 char *Menu_GetText(char *dest, const Menu_Item_t *MenuItem);
 char *Menu_DataStr(char *dest, const Menu_Item_t *MenuItem);
 
+// Init Menu
+void InitMenu(void);
+
+typedef enum 
+{
+    TIME_SET_UP,
+    TIME_SET_DOWN,
+    DATE_SET_UP,
+    DATE_SET_DOWN
+} ButtonSet;
+
+typedef enum 
+{
+    PRINT_TIME,
+    PRINT_DATE
+} PrintValues;
+
+void setTimeVal(ButtonSet);
+void setDateVal(ButtonSet);
+void printValue(PrintValues);
+
+
 #endif
