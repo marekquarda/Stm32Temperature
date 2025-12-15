@@ -35,6 +35,7 @@ set(MX_Application_Src
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/main.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/display.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/menu.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/micromenu.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/clock.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/ee.c
     ${CMAKE_CURRENT_SOURCE_DIR}/../../Core/Src/int_eeprom.c

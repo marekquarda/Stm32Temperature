@@ -1,5 +1,7 @@
 #include "menu.h"
 #include "display.h"
+#include "micromenu.h"
+
 
 MenuButton_t redMenuButton;
 MenuButton_t greenMenuButton;
