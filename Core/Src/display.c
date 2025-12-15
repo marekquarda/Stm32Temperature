@@ -108,8 +108,8 @@ void showTime() {
 	uint8_t minutes[2];
 	uint8_t second[2];
 	getFormatTime(hours, minutes, second);
-	getSymbol(getNumberEnum(minutes[0]),POSITION_3, symbols_mem);
-	getSymbol(getNumberEnum(minutes[1]),POSITION_2, symbols_mem);
+	getSymbol(getNumberEnum(hours[0]),POSITION_3, symbols_mem);
+	getSymbol(getNumberEnum(hours[1]),POSITION_2, symbols_mem);
 	display(symbols_mem);
 }
 
@@ -336,8 +336,6 @@ void getSymbol(Number number, Position pos, uint32_t* value) {
 Number getNumberEnum(uint8_t number) {
 	switch (number)
 	{
-	case 0:
-		return NUMBER_0;
 	case 1:
 		return NUMBER_1;
 	case 2:
@@ -356,6 +354,8 @@ Number getNumberEnum(uint8_t number) {
 		return NUMBER_8;
 	case 9:
 		return NUMBER_9;
+	case 0:
+		return NUMBER_0;
 	}
 }
 

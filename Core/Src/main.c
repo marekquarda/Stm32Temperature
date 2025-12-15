@@ -110,10 +110,10 @@ int main(void)
   MX_RTC_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim2);
   initTime(hrtc);
   initDisplay(hlcd);
   initMenu();
+  HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -473,6 +473,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 
 HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
   if(htim -> Instance == TIM2) {
+    HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
     reloadDisplay();
   }
 }

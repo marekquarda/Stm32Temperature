@@ -27,12 +27,14 @@ void getArrayFromBCD(uint8_t bcd, uint8_t *output) {
 
 // public methods
 void getFormatTime(uint8_t* hours, uint8_t* minute, uint8_t* second) {
+    getTime();
     getArrayFromBCD(sTime.Hours, hours);
     getArrayFromBCD(sTime.Minutes, minute);
     getArrayFromBCD(sTime.Seconds, second);
 }
 
 void getFormatDate(uint8_t* day, uint8_t* month, uint8_t* year, uint8_t* weekAday) {
+    getDate();
     getArrayFromBCD(sDate.Date, day);
     getArrayFromBCD(sDate.Month, month);
     getArrayFromBCD(sDate.Year, year);
