@@ -144,8 +144,8 @@ void initDisplay(LCD_HandleTypeDef handle) {
 void showTime() {
 	clearDisp(symbols_mem);
 	getFormatTime(sTime, hour, minutes, seconds);
-	//logComPort(TIME, hour, minutes, seconds, NULL);
-	getFormatDate(sDate, day, month, year, week);
+	logComPort(TIME, hour, minutes, seconds, NULL);
+	//getFormatDate(sDate, day, month, year, week);
 	logComPort(DAY, day, month, year, week);
 	getSymbol(getNumberEnum(seconds[0]),POSITION_3, symbols_mem);
 	getSymbol(getNumberEnum(seconds[1]),POSITION_2, symbols_mem);

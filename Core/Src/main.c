@@ -27,6 +27,7 @@
 #include "display.h"
 #include "menu.h"
 #include "clock.h"
+#include "ee.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
