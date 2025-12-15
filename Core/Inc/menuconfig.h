@@ -23,6 +23,7 @@
 #endif
 #endif
 
+
 /** Configuration for the desired memory storage location of created menu items.
  *  This may be configured to locate the menus into FLASH memory space, SRAM, or
  *  any other suitable memory space.
@@ -34,6 +35,6 @@
  *
  *  \param[in] Addr  Address of the pointer to read
  */
-#elif defined(__arm__) // && defined(__GNUC__)
+#define MENU_ITEM_READ_POINTER(Addr) *(Addr)
 
 #endif
