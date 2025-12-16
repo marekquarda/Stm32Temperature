@@ -76,6 +76,10 @@ typedef enum {
     COM3
 } Coms;
 
+typedef enum {
+    DAY,
+    TIME
+} DayOrTime;
 
 typedef enum {
     NUMBER_0 = 0b00111111,      // 0
@@ -113,7 +117,7 @@ extern uint32_t symbols_mem[3];
 void initDisplay(LCD_HandleTypeDef handle);
 void reloadDisplay(RTC_DateTypeDef myDate, RTC_TimeTypeDef myTime);
 void display(uint32_t *symbols);
-void logComPort(uint8_t* hour, uint8_t* minute, uint8_t* second);
+void logComPort(DayOrTime daytime ,uint8_t* first, uint8_t* second, uint8_t* third, uint8_t* four);
 void clearDisp(uint32_t* symbols);
 Number getNumberEnum(uint8_t number);
 void getSymbol(Number number, Position pos, uint32_t *button);

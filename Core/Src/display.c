@@ -23,9 +23,8 @@ uint8_t sendBuffer[128];
 LCD_HandleTypeDef lcd;
 RTC_DateTypeDef sDate;
 RTC_TimeTypeDef sTime;
-uint8_t hour[2];
-uint8_t minutes[2];
-uint8_t seconds[2];
+uint8_t hour[2], minutes[2], seconds[2];
+uint8_t day[2], month[2], year[2], week[2];
 
 int Display_Zero[2] = {
     COM0_NUMBER_ONE,
@@ -112,15 +111,30 @@ void initDisplay(LCD_HandleTypeDef handle) {
 void showTime() {
 	clearDisp(symbols_mem);
 	getFormatTime(sTime, hour, minutes, seconds);
+	//logComPort(TIME, hour, minutes, seconds, NULL);
+	getFormatDate(sDate, day, month, year, week);
+	logComPort(DAY, day, month, year, week);
 	getSymbol(getNumberEnum(seconds[0]),POSITION_3, symbols_mem);
 	getSymbol(getNumberEnum(seconds[1]),POSITION_2, symbols_mem);
 	display(symbols_mem);
-	logComPort(hour, minutes, seconds);
+	
 }
 
-void logComPort(uint8_t* ho, uint8_t* min, uint8_t* sec) {
-	snprintf((char*) sendBuffer, sizeof(sendBuffer), "Time: %01d%01d:%01d%01d:%01d%01d\r\n", ho[1], ho[0], min[1], min[0], sec[1], sec[0]);
-    CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
+void logComPort(DayOrTime daytime, uint8_t* first, uint8_t* second, uint8_t* third, uint8_t* four) {
+	switch (daytime)
+	{
+	case DAY:
+		snprintf((char*) sendBuffer, sizeof(sendBuffer), "Day: %01d%01d.%01d%01d.%01d%01d, Week: %01d%01d\n\r", first[1], first[0], second[1], second[0], third[1], third[0], four[1], four[0]);
+    	CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
+		break;
+	case TIME:
+		snprintf((char*) sendBuffer, sizeof(sendBuffer), "Time: %01d%01d:%01d%01d:%01d%01d\n\r", first[1], first[0], second[1], second[0], third[1], third[0]);
+    	CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
+		break;
+	default:
+		break;
+	}
+	
 }
 
 void reloadDisplay(RTC_DateTypeDef myDate, RTC_TimeTypeDef myTime) {

@@ -1,19 +1,5 @@
 #include "clock.h"
 
-// handler
-// RTC_TimeTypeDef myTime;
-// RTC_DateTypeDef myDate;
-
-// private methods
-// void getTime() {
-//     HAL_RTC_GetTime(&time, &myTime, RTC_FORMAT_BCD);
-// }
-
-// void getDate() {
-//     //HAL_RTC_GetState()
-//     HAL_RTC_GetDate(&time, &myDate, RTC_FORMAT_BCD);
-// }
-
 void getArrayFromBCD(uint8_t bcd, uint8_t *output) {
     output[0] = bcd & 0x0F;
     output[1] = (bcd >> 4) & 0x0F;
