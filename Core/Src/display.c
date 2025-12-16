@@ -1,6 +1,4 @@
 #include "display.h"
-#include "clock.h"
-#include "usbd_cdc.h"
 
 /* Displej TempTale Ultra
  *
@@ -104,87 +102,6 @@ uint32_t SymbolsCom3[8] = {
 	COM3_SYMBOL_MIN_S        
 };
 
-void initDisplay(LCD_HandleTypeDef handle) {
-	lcd = handle;
-}
-
-void showTime() {
-	clearDisp(symbols_mem);
-	getFormatTime(sTime, hour, minutes, seconds);
-	//logComPort(TIME, hour, minutes, seconds, NULL);
-	getFormatDate(sDate, day, month, year, week);
-	logComPort(DAY, day, month, year, week);
-	getSymbol(getNumberEnum(seconds[0]),POSITION_3, symbols_mem);
-	getSymbol(getNumberEnum(seconds[1]),POSITION_2, symbols_mem);
-	display(symbols_mem);
-	
-}
-
-void logComPort(DayOrTime daytime, uint8_t* first, uint8_t* second, uint8_t* third, uint8_t* four) {
-	switch (daytime)
-	{
-	case DAY:
-		snprintf((char*) sendBuffer, sizeof(sendBuffer), "Day: %01d%01d.%01d%01d.%01d%01d, Week: %01d%01d\n\r", first[1], first[0], second[1], second[0], third[1], third[0], four[1], four[0]);
-    	CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
-		break;
-	case TIME:
-		snprintf((char*) sendBuffer, sizeof(sendBuffer), "Time: %01d%01d:%01d%01d:%01d%01d\n\r", first[1], first[0], second[1], second[0], third[1], third[0]);
-    	CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
-		break;
-	default:
-		break;
-	}
-	
-}
-
-void reloadDisplay(RTC_DateTypeDef myDate, RTC_TimeTypeDef myTime) {
-	sDate = myDate;
-	sTime = myTime;
-	showTime();
-}
-
-void display(uint32_t* symbols) {
-	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER0, 0x00000000, symbols[0]);
-	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER2, 0x00000000, symbols[1]);
-	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER4, 0x00000000, symbols[2]);
-	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER6, 0x00000000, symbols[3]);
-
-	HAL_LCD_UpdateDisplayRequest(&lcd); 
-}
-
-void testLcd() {
-	clearDisp(symbols_mem);
-
-	while(1){
-	}
-}
-
-void clearDisp(uint32_t* symbols) {
-	for(int i = 0; i <= 3; ++i) {
-		symbols[i] = 0;
-	}
-}
-
-void getSymbol(Number number, Position pos, uint32_t* value) {
-	switch (pos)
-	{
-	case POSITION_0:
-		getZero(number, Display_Zero, value);
-		break;
-	case POSITION_1:
-		getNumber(number, Display_One, value);
-		break;		
-	case POSITION_2:
-		getNumber(number, Display_Two, value);
-		break;		
-	case POSITION_3:
-		getNumber(number, Display_Three, value);
-		break;		
-	default: // Position 1,2,3
-		break;
-	}
-}
-
 Number getNumberEnum(uint8_t number) {
 	switch (number)
 	{
@@ -208,8 +125,74 @@ Number getNumberEnum(uint8_t number) {
 		return NUMBER_9;
 	case 0:
 		return NUMBER_0;
+	default: 		
+		return NUMBER_BLANK;
 	}
-}
+};
+
+void testLcd() {
+	clearDisp(symbols_mem);
+
+	while(1){
+	}
+};
+
+void initDisplay(LCD_HandleTypeDef handle) {
+	lcd = handle;
+};
+
+void showTime() {
+	clearDisp(symbols_mem);
+	getFormatTime(sTime, hour, minutes, seconds);
+	//logComPort(TIME, hour, minutes, seconds, NULL);
+	getFormatDate(sDate, day, month, year, week);
+	logComPort(DAY, day, month, year, week);
+	getSymbol(getNumberEnum(seconds[0]),POSITION_3, symbols_mem);
+	getSymbol(getNumberEnum(seconds[1]),POSITION_2, symbols_mem);
+	display(symbols_mem);
+	
+};
+
+void reloadDisplay(RTC_DateTypeDef myDate, RTC_TimeTypeDef myTime) {
+	sDate = myDate;
+	sTime = myTime;
+	showTime();
+};
+
+void display(uint32_t* symbols) {
+	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER0, 0x00000000, symbols[0]);
+	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER2, 0x00000000, symbols[1]);
+	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER4, 0x00000000, symbols[2]);
+	HAL_LCD_Write(&lcd, LCD_RAM_REGISTER6, 0x00000000, symbols[3]);
+
+	HAL_LCD_UpdateDisplayRequest(&lcd); 
+};
+
+void clearDisp(uint32_t* symbols) {
+	for(int i = 0; i <= 3; ++i) {
+		symbols[i] = 0;
+	}
+};
+
+void getSymbol(Number number, Position pos, uint32_t* value) {
+	switch (pos)
+	{
+	case POSITION_0:
+		getZero(number, Display_Zero, value);
+		break;
+	case POSITION_1:
+		getNumber(number, Display_One, value);
+		break;		
+	case POSITION_2:
+		getNumber(number, Display_Two, value);
+		break;		
+	case POSITION_3:
+		getNumber(number, Display_Three, value);
+		break;		
+	default: // Position 1,2,3
+		break;
+	}
+};
 
 void getNumber(Number number, int* numset, uint32_t* value) {
 	int temp = number;
@@ -224,9 +207,9 @@ void getNumber(Number number, int* numset, uint32_t* value) {
 		}
 		temp = temp >> 1;
 	}
-}
+};
 
-void getZero(Number number, int* numset, u_int32_t* value) {
+void getZero(Number number, int* numset, uint32_t* value) {
 	switch (number)
 	{
 	case NUMBER_1:
@@ -235,5 +218,21 @@ void getZero(Number number, int* numset, u_int32_t* value) {
 	default:
 		break;
 	}
-}
+};
+
+void logComPort(DayOrTime daytime, uint8_t* first, uint8_t* second, uint8_t* third, uint8_t* four) {
+	switch (daytime)
+	{
+	case DAY:
+		snprintf((char*) sendBuffer, sizeof(sendBuffer), "Day: %01d%01d.%01d%01d.%01d%01d, Week: %01d%01d\n\r", first[1], first[0], second[1], second[0], third[1], third[0], four[1], four[0]);
+    	CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
+		break;
+	case TIME:
+		snprintf((char*) sendBuffer, sizeof(sendBuffer), "Time: %01d%01d:%01d%01d:%01d%01d\n\r", first[1], first[0], second[1], second[0], third[1], third[0]);
+    	CDC_Transmit_FS(sendBuffer, sizeof(sendBuffer));
+		break;
+	default:
+		break;
+	}
+};
 

@@ -2,6 +2,9 @@
 #define __DISPLAY_H
 
 #include "main.h"
+#include "clock.h"
+#include "usbd_cdc.h"
+#include "usbd_cdc_if.h"
 #include "stm32l1xx_hal_lcd.h"
 
 // macro for argument "symbol" in function display(), their combinations takes symbols for viewing
@@ -115,6 +118,7 @@ typedef enum {
 extern uint32_t symbols_mem[3];
 
 void initDisplay(LCD_HandleTypeDef handle);
+
 void reloadDisplay(RTC_DateTypeDef myDate, RTC_TimeTypeDef myTime);
 void display(uint32_t *symbols);
 void logComPort(DayOrTime daytime ,uint8_t* first, uint8_t* second, uint8_t* third, uint8_t* four);
