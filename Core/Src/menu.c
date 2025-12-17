@@ -1,3 +1,12 @@
+/*
+ *    MICRO-MENU V3.6
+ *
+ * @file        menu.c
+ * @brief       Menu Library
+ * @author      Marek Quarda
+ * @version     1.0.0
+ */
+
 #include "menu.h"
 #include "display.h"
 #include "micromenu.h"

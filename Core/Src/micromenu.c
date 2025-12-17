@@ -1,9 +1,11 @@
-/**
-              MICRO-MENU V3.6
-              
-          (C) Marek Quarda, 2025
-
-                                      */
+/*
+ *    MICRO-MENU V3.6
+ *
+ * @file        micromenu.c
+ * @brief       Menu Library
+ * @author      Marek Quarda
+ * @version     3.6.1
+ */
 
 #include "micromenu.h"
 

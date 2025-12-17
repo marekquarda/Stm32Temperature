@@ -1,3 +1,10 @@
+/*
+ * @file        clock.c
+ * @brief       Clock Library
+ * @author      Marek Quarda
+ * @version     1.0.0
+ */
+
 #include "clock.h"
 
 void getArrayFromBCD(uint8_t bcd, uint8_t *output) {

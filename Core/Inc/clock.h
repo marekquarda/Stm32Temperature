@@ -1,3 +1,10 @@
+/*
+ * @file        clock.h
+ * @brief       Clock Library
+ * @author      Marek Quarda
+ * @version     1.0.0
+ */
+
 #ifndef __CLOCK_H
 #define __CLOCK_H
 

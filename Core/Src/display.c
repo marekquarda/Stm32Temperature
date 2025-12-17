@@ -1,4 +1,9 @@
-#include "display.h"
+/*
+ * @file        display.h
+ * @brief       Display Library
+ * @author      Marek Quarda
+ * @version     1.0.0
+ */
 
 /* Displej TempTale Ultra
  *
@@ -15,6 +20,9 @@
  * PIN(disp):  14    13    12    11   10   9    8     7     6     5     4     3     2     1
  *
  */
+
+#include "display.h"
+
 
 uint32_t symbols_mem[3];
 uint8_t sendBuffer[128];
