@@ -26,7 +26,7 @@
 
 uint32_t symbols_mem[3];
 uint8_t sendBuffer[128];
-LCD_HandleTypeDef lcd;
+
 RTC_DateTypeDef sDate;
 RTC_TimeTypeDef sTime;
 uint8_t hour[2], minutes[2], seconds[2];
@@ -145,16 +145,13 @@ void testLcd() {
 	}
 };
 
-void initDisplay(LCD_HandleTypeDef handle) {
-	lcd = handle;
-};
 
 void showTime() {
 	clearDisp(symbols_mem);
 	getFormatTime(sTime, hour, minutes, seconds);
-	logComPort(TIME, hour, minutes, seconds, NULL);
+	//logComPort(TIME, hour, minutes, seconds, NULL);
 	//getFormatDate(sDate, day, month, year, week);
-	logComPort(DAY, day, month, year, week);
+	//logComPort(DAY, day, month, year, week);
 	getSymbol(getNumberEnum(seconds[0]),POSITION_3, symbols_mem);
 	getSymbol(getNumberEnum(seconds[1]),POSITION_2, symbols_mem);
 	display(symbols_mem);

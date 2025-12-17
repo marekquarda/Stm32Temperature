@@ -123,8 +123,9 @@ typedef enum {
 } Position;
 
 extern uint32_t symbols_mem[3];
+extern LCD_HandleTypeDef hlcd;
+#define lcd hlcd
 
-void initDisplay(LCD_HandleTypeDef handle);
 
 void reloadDisplay(RTC_DateTypeDef myDate, RTC_TimeTypeDef myTime);
 void display(uint32_t *symbols);

@@ -28,6 +28,7 @@
 #include "menu.h"
 #include "clock.h"
 #include "ee.h"
+#include "spi_eeprom.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -76,6 +77,8 @@ static void MX_TIM2_Init(void);
 /* USER CODE BEGIN 0 */
 RTC_TimeTypeDef myTime;
 RTC_DateTypeDef myDate;
+uint32_t ID = 0;
+uint8_t buffer[128];
 /* USER CODE END 0 */
 
 /**
@@ -116,9 +119,10 @@ int main(void)
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   //initTime(hrtc);
-  initDisplay(hlcd);
+  //initDisplay(hlcd);
   initMenu();
   HAL_TIM_Base_Start_IT(&htim2);
+  ID = W25X_ReadID();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -129,6 +133,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
     testPress();
+    snprintf((char*) buffer, sizeof(buffer), "ID: %#08x\n\r", (int) ID);
+    CDC_Transmit_FS(buffer, sizeof(buffer));
+    HAL_Delay(2000);
     //testLcd();
     //show(hlcd);
   }
