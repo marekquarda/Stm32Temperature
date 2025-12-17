@@ -1,10 +1,12 @@
-/**
-              MICRO-MENU V3.6
-              
-          (C) Marek Quarda, 2025
-
-                                      */
-
+/*
+ *  MICRO-MENU V3.6  
+ *
+ * @file        menuconfig.h
+ * @brief       Menu Library
+ * @author      Marek Quarda
+ * @version     3.6.1
+ */
+ 
 #ifndef _MICRO_MENU_CONFIG_H_
 #define _MICRO_MENU_CONFIG_H_
 

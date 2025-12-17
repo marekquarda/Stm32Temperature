@@ -1,4 +1,3 @@
-
 /*
  * @file        ee_config.h
  * @brief       EEPROM Emulation Library

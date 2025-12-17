@@ -1,3 +1,10 @@
+/*
+ * @file        display.h
+ * @brief       Display Library
+ * @author      Marek Quarda
+ * @version     1.0.0
+ */
+
 #ifndef __DISPLAY_H
 #define __DISPLAY_H
 
