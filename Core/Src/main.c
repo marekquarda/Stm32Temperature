@@ -148,9 +148,10 @@ int main(void)
      //   HAL_Delay(400);
 //     }
       //HAL_Delay(100);
-      if (startPage > 1024) {
+      if (startPage > 2048) {
         previous = false;
         startPage = 0;
+        HAL_Delay(4000);
       }
        startPage++;
    // }
