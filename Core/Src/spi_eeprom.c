@@ -81,3 +81,50 @@ void W25X_ReadFast(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *r
     SPI_Read(rData, size);
     csHIGH();
 }
+
+void write_enable(void) {
+    uint8_t tData = WRITE_ENABLE;
+    csLOW();
+    SPI_Write(&tData, 1);
+    csHIGH();
+    W25X_Delay(5);
+}
+
+
+void write_disable(void) {
+    uint8_t tData = WRITE_DISABLE;
+    csLOW();
+    SPI_Write(&tData, 1);
+    csHIGH();
+    W25X_Delay(5);
+}
+
+void W25X_EraseSector(uint16_t numsector) {
+    uint8_t tData[6];
+    uint32_t memAddr = numsector*16*256;
+    write_enable();
+        if (numBLOCK < 512) {
+        tData[0] = ERASE_SECTOR;            // Erase sector
+        tData[1] = (memAddr>>16)&0xFF;      // MSB of the memory Address
+        tData[2] = (memAddr>>8)&0xFF;
+        tData[3] = (memAddr)&0xFF;          // LSB of the memory Address   
+        
+        csLOW();
+        SPI_Write(tData, 4);
+        csHIGH();
+    } else {
+        tData[0] = ERASE_SECTOR;            // Erase sector
+        tData[1] = (memAddr>>24)&0xFF;      // MSB of the memory Address
+        tData[2] = (memAddr>>16)&0xFF;
+        tData[3] = (memAddr>>8)&0xFF;       
+        tData[4] = (memAddr)&0xFF;          // LSB of the memory Address   
+
+        csLOW();
+        SPI_Write(tData, 5);
+        csHIGH();
+    }
+
+    W25X_Delay(450);                        // 450ms delay for sector erase
+
+    write_disable();
+}
