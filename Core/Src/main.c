@@ -59,6 +59,10 @@ TIM_HandleTypeDef htim7;
 /* USER CODE BEGIN PV */
 uint8_t usbTxBuf[USB_BUFLEN];
 uint16_t usbTxBufLen;
+
+uint8_t usbRxBuf[USB_BUFLEN];
+uint16_t usbRxBufLen;
+uint8_t usbRxFlag = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -139,30 +143,25 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    if (usbRxFlag && usbRxBufLen) {
+      uint32_t timeNowMS = HAL_GetTick();
+      usbTxBufLen = snprintf((char*) usbTxBuf, USB_BUFLEN, "[%02lu:%02lu] %u\r\n", (timeNowMS/60000),(timeNowMS/1000) % 60, usbRxBufLen);
+      CDC_Transmit_FS(usbTxBuf, usbTxBufLen);
+      usbRxFlag = 0;
+      usbRxBufLen = 0;
+    }
     //testPress();
-  //  if (previous) {
-     W25X_Read(startPage,0,512, RxData);
-   //  for (int i = 0; i < 512; i++) {
-        usbTxBufLen = snprintf((char*) usbTxBuf, USB_BUFLEN, "%s", RxData);
-        CDC_Transmit_FS(usbTxBuf, usbTxBufLen); 
-     //   HAL_Delay(400);
-//     }
-      //HAL_Delay(100);
+    if(previous) {
+      W25X_ReadFast(startPage,0,512, RxData);
+      usbTxBufLen = snprintf((char*) usbTxBuf, USB_BUFLEN, "%s", RxData);
+      CDC_Transmit_FS(usbTxBuf, usbTxBufLen); 
       if (startPage > 2048) {
         previous = false;
         startPage = 0;
         HAL_Delay(4000);
       }
-       startPage++;
-   // }
-    //startPage = 0;
-    
-//    HAL_Delay(1000);
-    // snprintf((char*) buffer, sizeof(buffer), "ID: %#08x\n\r", (int) ID);
-    // CDC_Transmit_FS(buffer, sizeof(buffer));
-    // HAL_Delay(2000);
-    //testLcd();
-    //show(hlcd);
+      startPage++;
+    }
   }
   /* USER CODE END 3 */
 }
@@ -529,6 +528,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
     HAL_RTC_GetDate(&hrtc, &myDate, RTC_FORMAT_BCD);
     reloadDisplay(myDate, myTime);
   }
+}
+
+void USB_RXCallback(uint8_t* Buf, uint32_t *Len) {
+  memcpy(usbRxBuf, Buf, *Len);
+  usbRxBufLen = *Len;
+  usbRxFlag = 1;
 }
 
 /* USER CODE END 4 */
