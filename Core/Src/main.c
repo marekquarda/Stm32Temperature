@@ -38,7 +38,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define USB_BUFLEN 128
+#define USB_BUFLEN 512
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -78,7 +78,10 @@ static void MX_TIM2_Init(void);
 RTC_TimeTypeDef myTime;
 RTC_DateTypeDef myDate;
 uint32_t ID = 0;
-uint8_t buffer[128];
+uint8_t buffer[512];
+uint8_t RxData[512];
+bool previous = false;
+uint32_t startPage = 0;
 /* USER CODE END 0 */
 
 /**
@@ -123,6 +126,10 @@ int main(void)
   initMenu();
   HAL_TIM_Base_Start_IT(&htim2);
   ID = W25X_ReadID();
+  // if (ID == 0xef3013) {
+  //   //W25X_Read(1,85,20, RxData);
+  //   W25X_Read(0,0,512, RxData);
+  // }
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -132,10 +139,27 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    testPress();
-    snprintf((char*) buffer, sizeof(buffer), "ID: %#08x\n\r", (int) ID);
-    CDC_Transmit_FS(buffer, sizeof(buffer));
-    HAL_Delay(2000);
+    //testPress();
+  //  if (previous) {
+     W25X_Read(startPage,0,512, RxData);
+   //  for (int i = 0; i < 512; i++) {
+        usbTxBufLen = snprintf((char*) usbTxBuf, USB_BUFLEN, "%s", RxData);
+        CDC_Transmit_FS(usbTxBuf, usbTxBufLen); 
+     //   HAL_Delay(400);
+//     }
+      //HAL_Delay(100);
+      if (startPage > 1024) {
+        previous = false;
+        startPage = 0;
+      }
+       startPage++;
+   // }
+    //startPage = 0;
+    
+//    HAL_Delay(1000);
+    // snprintf((char*) buffer, sizeof(buffer), "ID: %#08x\n\r", (int) ID);
+    // CDC_Transmit_FS(buffer, sizeof(buffer));
+    // HAL_Delay(2000);
     //testLcd();
     //show(hlcd);
   }
@@ -484,12 +508,16 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
   if (GPIO_Pin == BTN_GREEN_Pin) {
-    HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-    greenMenuButton.buttonFlag.bit.B0 = SET;
-  }
+    //HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+    if (ID == 0xef3013) {
+        HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
+        previous = true;
+    }
+    greenMenuButton.buttonFlag.bit.B0 = SET; 
+  }    
   if (GPIO_Pin == BTN_RED_Pin) {
     HAL_GPIO_TogglePin(LED_RED_GPIO_Port, LED_RED_Pin);
-    redMenuButton.buttonFlag.bit.B0 = SET;
+      redMenuButton.buttonFlag.bit.B0 = SET;  
   }
 }
 

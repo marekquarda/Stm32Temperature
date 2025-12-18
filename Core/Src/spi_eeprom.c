@@ -54,7 +54,7 @@ void W25X_Read(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *rData
 }
 
 
-void W25X_FastRead(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *rData) {
+void W25X_ReadFast(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *rData) {
     uint8_t tData[6];
     uint32_t memAddr = startPage*256 + offset;
     if (numBLOCK < 512) {
