@@ -130,10 +130,6 @@ int main(void)
   initMenu();
   HAL_TIM_Base_Start_IT(&htim2);
   ID = W25X_ReadID();
-  // if (ID == 0xef3013) {
-  //   //W25X_Read(1,85,20, RxData);
-  //   W25X_Read(0,0,512, RxData);
-  // }
   /* USER CODE END 2 */
 
   /* Infinite loop */
