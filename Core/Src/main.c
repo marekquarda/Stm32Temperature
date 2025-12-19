@@ -84,7 +84,7 @@ RTC_DateTypeDef myDate;
 uint32_t ID = 0;
 uint8_t buffer[512];
 uint8_t RxData[512];
-bool previous = false;
+bool isPressed = false;
 uint32_t startPage = 0;
 /* USER CODE END 0 */
 
@@ -147,12 +147,12 @@ int main(void)
       usbRxBufLen = 0;
     }
     //testPress();
-    if(previous) {
+    if(isPressed) {
       W25X_ReadFast(startPage,0,512, RxData);
       usbTxBufLen = snprintf((char*) usbTxBuf, USB_BUFLEN, "%s", RxData);
       CDC_Transmit_FS(usbTxBuf, usbTxBufLen); 
       if (startPage > 2048) {
-        previous = false;
+        isPressed = false;
         startPage = 0;
         HAL_Delay(4000);
       }
@@ -507,7 +507,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
     //HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
     if (ID == 0xef3013) {
         HAL_GPIO_TogglePin(LED_GREEN_GPIO_Port, LED_GREEN_Pin);
-        previous = true;
+        isPressed = true;
     }
     greenMenuButton.buttonFlag.bit.B0 = SET; 
   }    

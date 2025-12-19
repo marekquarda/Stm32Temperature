@@ -20,6 +20,7 @@ extern SPI_HandleTypeDef hspi1;
 #define WRITE_ENABLE        0x06    // Write Enable
 #define WRITE_DISABLE       0x04    // Write Disable
 #define ERASE_SECTOR        0x20    // Erase Sector
+#define PAGE_PROGRAM        0x02    // Page Program
 
 #define csLOW() HAL_GPIO_WritePin(GPIOA, SPI1_CS_Pin, GPIO_PIN_RESET);
 #define csHIGH() HAL_GPIO_WritePin(GPIOA, SPI1_CS_Pin, GPIO_PIN_SET);
@@ -31,6 +32,7 @@ void W25X_ReadFast(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *r
 void SPI_Write(uint8_t *data, uint8_t length);
 void SPI_Read(uint8_t *data, uint32_t length);
 void W25X_EraseSector(uint16_t numsector);
+void W25X_WritePage(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data);
 
 
 #endif
