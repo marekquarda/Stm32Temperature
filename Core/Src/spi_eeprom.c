@@ -183,9 +183,17 @@ void W25X_WritePage(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data
             tData[indx++] = data[i+dataPosition];
         }
 
-        csLOW();
-        SPI_Write(tData, bytestosend);
-        csHIGH();
+        if (bytestosend > 250) {
+            csLOW();
+            SPI_Write(tData, 100);
+            SPI_Write(tData+100, bytestosend-100);
+            csHIGH();
+            
+        } else {
+            csLOW();
+            SPI_Write(tData, bytestosend);
+            csHIGH();
+        }
 
         startPage++;
         offset = 0;
