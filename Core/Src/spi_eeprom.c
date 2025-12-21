@@ -104,6 +104,12 @@ uint32_t bytesToWrite(uint32_t size, uint16_t offset) {
     else return 256-offset;
 }
 
+uint32_t bytesToModify(uint32_t size, uint16_t offset) {
+    if((size+offset)< 4096) return size;
+    else return 4096-offset;
+}
+
+
 void W25X_EraseSector(uint16_t numsector) {
     uint8_t tData[6];
     uint32_t memAddr = numsector*16*256;
@@ -134,14 +140,14 @@ void W25X_EraseSector(uint16_t numsector) {
     write_disable();
 }
 
-void W25X_WritePage(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data) {
+void W25X_WriteClean(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data) {
     uint8_t tData[266];
     uint32_t startPage = page;
     uint32_t endPage = startPage + ((size+offset-1)/256);
     uint32_t numPages = endPage-startPage+1;
 
     // erase sector
-    uint16_t startSector = startPage/16;
+    uint16_t startSector = startPage/16; 
     uint16_t endSector = endPage/16;
     uint16_t numSectors = endSector-startSector+1;
     for (uint16_t i = 0; i < numSectors; i++) {
@@ -202,5 +208,33 @@ void W25X_WritePage(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data
 
         W25X_Delay(5);
         write_disable();
+    }
+}
+
+void W25X_Write(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data) {
+    // erase sector
+    uint16_t startSector = page/16; 
+    uint16_t endSector = (page + ((size+offset-1)/256))/16;
+    uint16_t numSectors = endSector-startSector+1;
+
+    uint8_t prevousData[4096];
+    uint32_t sectorOffset = ((page%16)*256)+offset;
+    uint32_t dataindx = 0;
+
+    for (uint16_t i = 0; i < numSectors; i++) {
+        uint32_t startPage = startSector*16;
+        W25X_ReadFast(startPage, 0, 4096, prevousData);
+
+        uint32_t bytesRemaining = bytesToModify(size, sectorOffset);
+        for(uint16_t i = 0; i < bytesRemaining; i++) {
+            prevousData[i+sectorOffset] = data[i+dataindx];
+        }
+
+        W25X_WriteClean(startPage, 0, 4096, prevousData);
+
+        startSector++;
+        sectorOffset = 0;
+        dataindx = dataindx+bytesRemaining;
+        size = size-bytesRemaining;
     }
 }
