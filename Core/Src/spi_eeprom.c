@@ -238,3 +238,64 @@ void W25X_Write(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data) {
         size = size-bytesRemaining;
     }
 }
+
+uint8_t W25X_ReadByte(uint32_t Addr) {
+    uint8_t tData[5];
+    uint8_t rData;
+
+    if (numBLOCK < 512) {
+        tData[0] = READ_DATA;            // Enable Read data
+        tData[1] = (Addr>>16)&0xFF;      // MSB of the memory Address
+        tData[2] = (Addr>>8)&0xFF;
+        tData[3] = (Addr)&0xFF;          // LSB of the memory Address    
+    } else {
+        tData[0] = READ_DATA;            // Enable Read data
+        tData[1] = (Addr>>24)&0xFF;      // MSB of the memory Address
+        tData[2] = (Addr>>16)&0xFF;
+        tData[3] = (Addr>>8)&0xFF;       
+        tData[4] = (Addr)&0xFF;          // LSB of the memory Address    
+    }
+    
+    csLOW(); 
+    if(numBLOCK < 512) {
+        SPI_Write(tData, 4);
+    } else {
+        SPI_Write(tData, 5);
+    }
+    SPI_Read(&rData, 1);
+    csHIGH();
+
+    return rData;
+}
+
+void W25X_WriteByte(uint32_t Addr, uint8_t data) {
+    uint8_t tData[6];
+    uint8_t indx;
+
+    if (numBLOCK < 512) {
+        tData[0] = PAGE_PROGRAM;         // Page Program
+        tData[1] = (Addr>>16)&0xFF;      // MSB of the memory Address
+        tData[2] = (Addr>>8)&0xFF;
+        tData[3] = (Addr)&0xFF;          // LSB of the memory Address    
+        tData[4] = data;
+        indx = 5;
+    } else {
+        tData[0] = PAGE_PROGRAM;         // Page program
+        tData[1] = (Addr>>24)&0xFF;      // MSB of the memory Address
+        tData[2] = (Addr>>16)&0xFF;
+        tData[3] = (Addr>>8)&0xFF;       
+        tData[4] = (Addr)&0xFF;          // LSB of the memory Address    
+        tData[5] = data;
+        indx = 6;
+    }
+
+    if (W25X_ReadByte(Addr) == 0xFF) {
+        write_enable();
+        csLOW();
+        SPI_Write(tData, indx);
+        csHIGH();
+
+        W25X_Delay(5);
+        write_disable();
+    }
+}

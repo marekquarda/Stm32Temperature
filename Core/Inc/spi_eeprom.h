@@ -34,6 +34,8 @@ void SPI_Read(uint8_t *data, uint32_t length);
 void W25X_EraseSector(uint16_t numsector);
 void W25X_WriteClean(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data);
 void W25X_Write(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data);
+uint8_t W25X_ReadByte(uint32_t Addr);
+void W25X_WriteByte(uint32_t Addr, uint8_t data);
 
 
 #endif
