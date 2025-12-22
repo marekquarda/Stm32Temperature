@@ -299,3 +299,51 @@ void W25X_WriteByte(uint32_t Addr, uint8_t data) {
         write_disable();
     }
 }
+
+void float2Bytes(uint8_t * ftoa_bytes_temp, float float_variable) {
+    union {
+        float a;
+        uint8_t bytes[4];
+    } thing;
+    
+    thing.a = float_variable;
+    for (uint8_t i = 0; i < 4; i++) {
+        ftoa_bytes_temp[i] = thing.bytes[i];
+    }
+}
+
+uint8_t tempBytes[4];
+
+float Bytes2float(uint8_t * ftoa_bytes_temp) {
+    union  {
+        float a;
+        uint8_t bytes[4];
+    } think;
+    
+    for (uint8_t i = 0; i < 4; i++) {
+        think.bytes[i] = ftoa_bytes_temp[i];
+    }
+
+    float float_variable = think.a;
+    return float_variable;
+}
+
+void W25X_WriteNUM(uint32_t page, uint16_t offset, float data) {
+    float2Bytes(tempBytes, data);
+
+    /* write using single byte function */
+    uint32_t Addr = (page*256)+offset;
+    for (int i = 0; i < 4; i++) {
+        W25X_WriteByte(i+Addr, tempBytes[i]);
+    }
+
+    /* Write using sector update function */
+    // W25X_Write([page, offset, 4, tempBytes]);
+}
+
+float W25X_ReadNUM(uint32_t page, uint16_t offset) {
+    uint8_t rData[4];
+    W25X_Read(page, offset, 4, rData);
+    
+    return (Bytes2float(rData));
+}
