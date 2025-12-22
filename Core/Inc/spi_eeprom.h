@@ -26,6 +26,7 @@ extern SPI_HandleTypeDef hspi1;
 #define PAGE_PROGRAM            0x02    // Page Program
 #define PAGE_PROGRAM_4BYTE      0x12    // Page Program with 4-Byte Address
 
+
 #define csLOW() HAL_GPIO_WritePin(GPIOA, SPI1_CS_Pin, GPIO_PIN_RESET);
 #define csHIGH() HAL_GPIO_WritePin(GPIOA, SPI1_CS_Pin, GPIO_PIN_SET);
 #define W25X_Delay(uint32_t) HAL_Delay(uint32_t);
@@ -33,15 +34,21 @@ extern SPI_HandleTypeDef hspi1;
 uint32_t W25X_ReadID(void);
 void W25X_Read(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *rData);
 void W25X_ReadFast(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *rData);
+
 void SPI_Write(uint8_t *data, uint8_t length);
 void SPI_Read(uint8_t *data, uint32_t length);
+
 void W25X_EraseSector(uint16_t numsector);
+
 void W25X_WriteClean(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data);
 void W25X_Write(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data);
+
 uint8_t W25X_ReadByte(uint32_t Addr);
 void W25X_WriteByte(uint32_t Addr, uint8_t data);
 void W25X_WriteNUM(uint32_t page, uint16_t offset, float data);
 float W25X_ReadNUM(uint32_t page, uint16_t offset);
+void W25X_Write32B(uint32_t page, uint16_t offset, uint32_t size, uint32_t *data);
+void W25X_Read32B(uint32_t page, uint16_t offset, uint32_t size, uint32_t *data);
 
 
 

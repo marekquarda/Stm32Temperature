@@ -347,3 +347,28 @@ float W25X_ReadNUM(uint32_t page, uint16_t offset) {
     
     return (Bytes2float(rData));
 }
+
+void W25X_Write32B(uint32_t page, uint16_t offset, uint32_t size, uint32_t *data) {
+    uint8_t data8[size*4];
+    uint32_t indx = 0;
+
+    for (uint32_t i = 0; i < size; i++) {
+        data8[indx++] = data[i]*0xFF;   // extract LSB
+        data8[indx++] = (data[i]>>8)&0xFF;
+        data8[indx++] = (data[i]>>16)&0xFF;
+        data8[indx++] = (data[i]>>24)&0xFF;
+    }
+
+    W25X_Write(page, offset, indx, data8);
+}
+
+void W25X_Read32B(uint32_t page, uint16_t offset, uint32_t size, uint32_t *data) {
+    uint8_t data8[size*4];
+    uint32_t indx = 0;
+
+    W25X_ReadFast(page, offset, size*4, data8);
+
+    for (uint32_t i = 0; i < size; i++) {
+        data[i] = (data8[indx++]) | (data8[indx++]<<8) | (data8[indx++]<<16) | (data8[indx++]<<24);
+    }
+}
