@@ -13,14 +13,18 @@
 extern SPI_HandleTypeDef hspi1;
 #define W25X_SPI hspi1
 
-#define numBLOCK            8       // Number of total blocks for 4Mb flash 8x16x16x256
-#define JEDEC_ID            0x9F    // JEDEC ID
-#define READ_DATA           0x03    // Read data
-#define FAST_READ           0x0B    // Fast Read data
-#define WRITE_ENABLE        0x06    // Write Enable
-#define WRITE_DISABLE       0x04    // Write Disable
-#define ERASE_SECTOR        0x20    // Erase Sector
-#define PAGE_PROGRAM        0x02    // Page Program
+#define numBLOCK                8       // Number of total blocks for 4Mb flash 8x16x16x256
+#define JEDEC_ID                0x9F    // JEDEC ID
+#define READ_DATA               0x03    // Read data
+#define READ_DATA_4BYTE         0x13    // Read data with 4-Byte Address
+#define FAST_READ               0x0B    // Fast Read data
+#define FAST_READ_4BYTE         0x0C    // Fast Read with 4-Byte Address
+#define WRITE_ENABLE            0x06    // Write Enable
+#define WRITE_DISABLE           0x04    // Write Disable
+#define SECTOR_ERASE            0x20    // Erase Sector
+#define SECTOR_ERASE_4BYTE      0x21    // Sector Erase with 4-Byte Address
+#define PAGE_PROGRAM            0x02    // Page Program
+#define PAGE_PROGRAM_4BYTE      0x12    // Page Program with 4-Byte Address
 
 #define csLOW() HAL_GPIO_WritePin(GPIOA, SPI1_CS_Pin, GPIO_PIN_RESET);
 #define csHIGH() HAL_GPIO_WritePin(GPIOA, SPI1_CS_Pin, GPIO_PIN_SET);

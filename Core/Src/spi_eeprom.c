@@ -29,7 +29,7 @@ uint32_t W25X_ReadID(void)
 
 void W25X_Read(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *rData) {
     uint8_t tData[5];
-    uint32_t memAddr = startPage*256 + offset;
+    uint32_t memAddr = (startPage*256) + offset;
     if (numBLOCK < 512) {
         tData[0] = READ_DATA;               // Enable Read data
         tData[1] = (memAddr>>16)&0xFF;      // MSB of the memory Address
@@ -64,7 +64,7 @@ void W25X_ReadFast(uint32_t startPage, uint8_t offset, uint16_t size, uint8_t *r
         tData[3] = (memAddr)&0xFF;          // LSB of the memory Address    
         tData[4] = 0;                       // Dummy clock
     } else {
-        tData[0] = FAST_READ;               // Enable Fast Read
+        tData[0] = FAST_READ_4BYTE;         // Enable Fast Read with 4-Byte Address
         tData[1] = (memAddr>>24)&0xFF;      // MSB of the memory Address
         tData[2] = (memAddr>>16)&0xFF;
         tData[3] = (memAddr>>8)&0xFF;       
@@ -115,7 +115,7 @@ void W25X_EraseSector(uint16_t numsector) {
     uint32_t memAddr = numsector*16*256;
     write_enable();
         if (numBLOCK < 512) {
-        tData[0] = ERASE_SECTOR;            // Erase sector
+        tData[0] = SECTOR_ERASE;            // Erase sector
         tData[1] = (memAddr>>16)&0xFF;      // MSB of the memory Address
         tData[2] = (memAddr>>8)&0xFF;
         tData[3] = (memAddr)&0xFF;           // LSB of the memory Address   
@@ -124,7 +124,7 @@ void W25X_EraseSector(uint16_t numsector) {
         SPI_Write(tData, 4);
         csHIGH();
     } else {
-        tData[0] = ERASE_SECTOR;            // Erase sector
+        tData[0] = SECTOR_ERASE_4BYTE;      // Erase sector with 4-byte Address
         tData[1] = (memAddr>>24)&0xFF;      // MSB of the memory Address
         tData[2] = (memAddr>>16)&0xFF;
         tData[3] = (memAddr>>8)&0xFF;       
@@ -165,7 +165,7 @@ void W25X_WriteClean(uint32_t page, uint16_t offset, uint32_t size, uint8_t *dat
         write_enable();
 
         if (numBLOCK < 512) {
-            tData[0] = ERASE_SECTOR;            // Erase sector
+            tData[0] = PAGE_PROGRAM;            // Page program
             tData[1] = (memAddr>>16)&0xFF;      // MSB of the memory Address
             tData[2] = (memAddr>>8)&0xFF;
             tData[3] = (memAddr)&0xFF;           // LSB of the memory Address   
@@ -173,7 +173,7 @@ void W25X_WriteClean(uint32_t page, uint16_t offset, uint32_t size, uint8_t *dat
             indx = 4;
         
         } else {
-            tData[0] = ERASE_SECTOR;            // Erase sector
+            tData[0] = PAGE_PROGRAM_4BYTE;      // Page program with 4-byte address
             tData[1] = (memAddr>>24)&0xFF;      // MSB of the memory Address
             tData[2] = (memAddr>>16)&0xFF;
             tData[3] = (memAddr>>8)&0xFF;       
@@ -225,9 +225,9 @@ void W25X_Write(uint32_t page, uint16_t offset, uint32_t size, uint8_t *data) {
         uint32_t startPage = startSector*16;
         W25X_ReadFast(startPage, 0, 4096, prevousData);
 
-        uint32_t bytesRemaining = bytesToModify(size, sectorOffset);
-        for(uint16_t i = 0; i < bytesRemaining; i++) {
-            prevousData[i+sectorOffset] = data[i+dataindx];
+        uint16_t bytesRemaining = bytesToModify(size, sectorOffset);
+        for(uint16_t j = 0; j < bytesRemaining; j++) {
+            prevousData[j+sectorOffset] = data[j+dataindx];
         }
 
         W25X_WriteClean(startPage, 0, 4096, prevousData);
@@ -249,7 +249,7 @@ uint8_t W25X_ReadByte(uint32_t Addr) {
         tData[2] = (Addr>>8)&0xFF;
         tData[3] = (Addr)&0xFF;          // LSB of the memory Address    
     } else {
-        tData[0] = READ_DATA;            // Enable Read data
+        tData[0] = READ_DATA_4BYTE;      // Enable Read Data with 4-Byte Address
         tData[1] = (Addr>>24)&0xFF;      // MSB of the memory Address
         tData[2] = (Addr>>16)&0xFF;
         tData[3] = (Addr>>8)&0xFF;       
@@ -280,7 +280,7 @@ void W25X_WriteByte(uint32_t Addr, uint8_t data) {
         tData[4] = data;
         indx = 5;
     } else {
-        tData[0] = PAGE_PROGRAM;         // Page program
+        tData[0] = PAGE_PROGRAM_4BYTE;   // Page Program with 4-Byte Address
         tData[1] = (Addr>>24)&0xFF;      // MSB of the memory Address
         tData[2] = (Addr>>16)&0xFF;
         tData[3] = (Addr>>8)&0xFF;       
